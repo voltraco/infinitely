@@ -1,0 +1,14 @@
+{
+  "name": "unendlich",
+  "version": "0.0.0",
+  "license": "MIT",
+  "repository": "voltraco/unendlich",
+  "scripts": {
+    "start": "beefy example.js"
+  },
+  "devDependencies": {
+    "beefy": "^2.1.8",
+    "bel": "^5.0.3",
+    "browserify": "^14.4.0"
+  }
+}
