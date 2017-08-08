@@ -13,12 +13,17 @@ for (let i = 0; i < 2e5; i++) {
 const inner = html`<div></div>`
 const outer = html`<ul style="height: 800px; width: 600px; overflow: auto">${inner}</ul>`
 document.body.appendChild(outer)
+const render = row => html`<li>${row.foo}: ${row.bar} (${row.beep})</li>`
 
-const example = new Unendlich({
+const start = new Date()
+
+new Unendlich({
   rows,
   inner,
   outer,
-  render: row => html`<li>${row.foo}: ${row.bar} (${row.beep})</li>`,
+  render,
   page: 100,
   padding: 50
 })
+
+console.log(`Initialized in ${new Date() - start}ms`)
