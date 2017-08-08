@@ -2,7 +2,7 @@ const Unendlich = require('.')
 const html = require('bel')
 
 const rows = []
-for (let i = 0; i < 1e5; i++) {
+for (let i = 0; i < 2e5; i++) {
   rows.push({
     foo: String(new Date()),
     bar: 'beep',
