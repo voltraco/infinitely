@@ -11,9 +11,10 @@ class Unendlich {
     this.pages = Array(Math.ceil(this.rows.length / this.pageRows))
     for (let i = 0; i < this.pages.length; i++) {
       this.pages[i] = document.createElement('div')
-      this.pages[i].style.height = (i < this.pages.length - 1
-        ? this.pageHeight
-        : this.rows.length % this.pageRows * this.rowHeight) + 'px'
+      this.pages[i].style.height =
+        (i < this.pages.length - 1
+          ? this.pageHeight
+          : this.rows.length % this.pageRows * this.rowHeight) + 'px'
       this.inner.appendChild(this.pages[i])
     }
     this.inner.style.height = `${this.rowHeight * this.rows.length}px`
@@ -31,9 +32,11 @@ class Unendlich {
       const page = this.pages[i]
       const start = i * this.pageHeight - this.padding
       const end = start + this.pageHeight + this.padding
-      if ((start >= viewStart && start <= viewEnd) ||
+      if (
+        (start >= viewStart && start <= viewEnd) ||
         (end >= viewStart && end <= viewEnd) ||
-        (start <= viewStart && end >= viewEnd)) {
+        (start <= viewStart && end >= viewEnd)
+      ) {
         if (!page.children.length) this.fillPage(i)
       } else {
         if (page.children.length) this.clearPage(i)
@@ -56,7 +59,11 @@ class Unendlich {
 
   fillPage (i) {
     const page = this.pages[i]
-    for (let j = i * this.pageRows; j < Math.min((i + 1) * this.pageRows, this.rows.length); j++) {
+    for (
+      let j = i * this.pageRows;
+      j < Math.min((i + 1) * this.pageRows, this.rows.length);
+      j++
+    ) {
       page.appendChild(this.renderRow(this.rows[j]))
     }
   }

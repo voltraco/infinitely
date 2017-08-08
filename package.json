@@ -4,11 +4,14 @@
   "license": "MIT",
   "repository": "voltraco/unendlich",
   "scripts": {
-    "start": "beefy example.js"
+    "start": "beefy example.js",
+    "test": "prettier-standard '*.js' && standard"
   },
   "devDependencies": {
     "beefy": "^2.1.8",
     "bel": "^5.0.3",
-    "browserify": "^14.4.0"
+    "browserify": "^14.4.0",
+    "prettier-standard": "^6.0.0",
+    "standard": "^10.0.3"
   }
 }

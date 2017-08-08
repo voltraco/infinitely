@@ -17,6 +17,7 @@ const render = row => html`<li>${row.foo}: ${row.bar} (${row.beep})</li>`
 
 const start = new Date()
 
+/* eslint-disable no-new */
 new Unendlich({
   rows,
   inner,
