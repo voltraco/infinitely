@@ -39,7 +39,7 @@ class Unendlich {
       ) {
         if (!page.children.length) this.fillPage(i)
       } else {
-        if (page.children.length) this.clearPage(i)
+        if (page.children.length) page.innerHTML = ''
       }
     }
   }
@@ -50,11 +50,6 @@ class Unendlich {
     const height = row.offsetHeight
     this.inner.removeChild(row)
     return height
-  }
-
-  clearPage (i) {
-    const page = this.pages[i]
-    while (page.firstChild) page.removeChild(page.firstChild)
   }
 
   fillPage (i) {
