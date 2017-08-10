@@ -1,3 +1,5 @@
+const throttle = require('raf-throttle').default
+
 class Unendlich {
   constructor ({ rows, inner, outer, render, page, padding }) {
     this.rows = rows
@@ -21,7 +23,7 @@ class Unendlich {
     this.padRows = padding || 50
     this.padding = this.padRows * this.rowHeight
     this.render()
-    this.outer.addEventListener('scroll', () => this.render())
+    this.outer.addEventListener('scroll', throttle(() => this.render()))
   }
 
   render () {
