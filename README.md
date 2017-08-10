@@ -41,6 +41,16 @@ const example = new Unendlich({
 $ npm install unendlich
 ```
 
+## API
+
+### new Unendlich({ rows, inner, outer, render, page = 100, padding = 50 })
+
+Create a new instance and `.render()` it.
+
+### Unendlich#render({ refresh })
+
+Force a render, if `reset` is `true` it will also rerender already rendered rows.
+
 ## License
 
 MIT

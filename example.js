@@ -1,12 +1,14 @@
 const Unendlich = require('.')
 const html = require('bel')
 
+const rand = () => Math.random().toString(16).slice(2)
+
 const rows = []
 for (let i = 0; i < 2e5; i++) {
   rows.push({
     foo: String(new Date()),
     bar: 'beep',
-    beep: Math.random().toString(16).slice(2)
+    beep: rand()
   })
 }
 
@@ -17,8 +19,7 @@ const render = row => html`<li>${row.foo}: ${row.bar} (${row.beep})</li>`
 
 const start = new Date()
 
-/* eslint-disable no-new */
-new Unendlich({
+const unendlich = new Unendlich({
   rows,
   inner,
   outer,
@@ -28,3 +29,8 @@ new Unendlich({
 })
 
 console.log(`Initialized in ${new Date() - start}ms`)
+
+setInterval(() => {
+  for (const row of rows) row.beep = rand()
+  unendlich.render({ refresh: true })
+}, 1000)

@@ -26,7 +26,7 @@ class Unendlich {
     this.outer.addEventListener('scroll', throttle(() => this.render()))
   }
 
-  render () {
+  render ({ refresh } = {}) {
     const viewStart = this.outer.scrollTop
     const viewEnd = viewStart + this.outerHeight
 
@@ -39,6 +39,7 @@ class Unendlich {
         (end >= viewStart && end <= viewEnd) ||
         (start <= viewStart && end >= viewEnd)
       ) {
+        if (refresh) page.innerHTML = ''
         if (!page.children.length) this.fillPage(i)
       } else {
         if (page.children.length) page.innerHTML = ''
