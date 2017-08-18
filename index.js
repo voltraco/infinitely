@@ -26,17 +26,18 @@ class Unendlich {
     if (this.pagesAvailable.length) {
       const page = this.pagesAvailable.pop()
       page.innerHTML = ''
-      page.style.top = `${i * this.pageHeight}px`
+      page.style.top = this.getPageTop(i)
+      if (i === this.numPages - 1) page.style.height = this.getLastPageHeight()
       this.pages[i] = page
     } else {
       this.pages[i] = document.createElement('div')
       Object.assign(this.pages[i].style, {
         height:
-          (i < this.numPages - 1
-            ? this.pageHeight
-            : this.rows.length % this.pageRows * this.rowHeight) + 'px',
+          i < this.numPages - 1
+            ? `${this.pageHeight}px`
+            : this.getLastPageHeight(),
         position: 'absolute',
-        top: `${i * this.pageHeight}px`,
+        top: this.getPageTop(i),
         width: '100%'
       })
       this.inner.appendChild(this.pages[i])
@@ -71,6 +72,14 @@ class Unendlich {
         delete this.pages[i]
       }
     }
+  }
+
+  getPageTop (i) {
+    return `${i * this.pageHeight}px`
+  }
+
+  getLastPageHeight (i) {
+    return `${this.rows.length % this.pageRows * this.rowHeight}px`
   }
 
   getRowHeight () {
