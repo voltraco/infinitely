@@ -22,48 +22,53 @@ class Unendlich {
 
   getPage (i) {
     if (this.pages[i]) return this.pages[i]
-
-    if (this.pagesAvailable.length) {
-      const page = this.pagesAvailable.pop()
-      page.innerHTML = ''
-      page.style.top = this.getPageTop(i)
-      if (i === this.numPages - 1) page.style.height = this.getLastPageHeight()
-      this.pages[i] = page
-    } else {
-      this.pages[i] = document.createElement('div')
-      Object.assign(this.pages[i].style, {
-        height:
-          i < this.numPages - 1
-            ? `${this.pageHeight}px`
-            : this.getLastPageHeight(),
-        position: 'absolute',
-        top: this.getPageTop(i),
-        width: '100%'
-      })
-      this.inner.appendChild(this.pages[i])
-    }
-
+    this.pages[i] = this.pagesAvailable.length
+      ? this.getAvailablePage(i)
+      : this.createNewPage(i)
     return this.pages[i]
+  }
+
+  getAvailablePage (i) {
+    const page = this.pagesAvailable.pop()
+    page.innerHTML = ''
+    page.style.top = this.getPageTop(i)
+    if (i === this.numPages - 1) page.style.height = this.getLastPageHeight()
+    return page
+  }
+
+  createNewPage (i) {
+    const page = document.createElement('div')
+    Object.assign(page.style, {
+      height:
+        i < this.numPages - 1
+          ? `${this.pageHeight}px`
+          : this.getLastPageHeight(),
+      position: 'absolute',
+      top: this.getPageTop(i),
+      width: '100%'
+    })
+    this.inner.appendChild(page)
+    return page
   }
 
   render ({ refresh } = {}) {
     const viewStart = this.outer.scrollTop
     const viewEnd = viewStart + this.outerHeight
+    const start = Math.max(
+      Math.floor((viewStart - this.padding) / this.pageHeight),
+      0
+    )
+    const end = Math.min(
+      Math.floor((viewEnd + this.padding) / this.pageHeight),
+      this.numPages - 1
+    )
     const pagesRendered = {}
 
-    for (let i = 0; i < this.numPages; i++) {
-      const start = i * this.pageHeight - this.padding
-      const end = start + this.pageHeight + this.padding
-      if (
-        (start >= viewStart && start <= viewEnd) ||
-        (end >= viewStart && end <= viewEnd) ||
-        (start <= viewStart && end >= viewEnd)
-      ) {
-        const page = this.getPage(i)
-        if (refresh && page.children.length) page.innerHTML = ''
-        if (!page.children.length) this.fillPage(i)
-        pagesRendered[i] = true
-      }
+    for (let i = start; i <= end; i++) {
+      const page = this.getPage(i)
+      if (refresh && page.children.length) page.innerHTML = ''
+      if (!page.children.length) this.fillPage(i)
+      pagesRendered[i] = true
     }
 
     for (const i of Object.keys(this.pages)) {
