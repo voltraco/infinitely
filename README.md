@@ -6,7 +6,13 @@ Infinite scrolling component that works with _any_ DOM structure and loads conte
 
 ## Usage
 
-There needs to be an outer and an inner element, the outer element having a fixed height and overflow auto. The rest is up to you:
+There needs to be an outer and an inner element, the outer element having
+
+- a fixed height
+- overflow auto
+- position relative
+
+The rest is up to you:
 
 ```js
 const Unendlich = require('unendlich')
