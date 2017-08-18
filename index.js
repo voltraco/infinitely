@@ -29,7 +29,8 @@ class Unendlich {
           ? this.pageHeight
           : this.rows.length % this.pageRows * this.rowHeight) + 'px',
       position: 'absolute',
-      top: `${i * this.pageHeight}px`
+      top: `${i * this.pageHeight}px`,
+      width: '100%'
     })
     this.inner.appendChild(this.pages[i])
     return this.pages[i]
