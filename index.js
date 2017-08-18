@@ -11,7 +11,7 @@ class Unendlich {
     this.pageRows = page || 100
     this.pageHeight = this.pageRows * this.rowHeight
     this.numPages = Math.ceil(this.rows.length / this.pageRows)
-    this.pages = []
+    this.pages = {}
     this.inner.style.height = `${this.rowHeight * this.rows.length}px`
     this.padRows = padding || 50
     this.padding = this.padRows * this.rowHeight
