@@ -12,6 +12,7 @@ class Unendlich {
     this.pageHeight = this.pageRows * this.rowHeight
     this.numPages = Math.ceil(this.rows.length / this.pageRows)
     this.pages = {}
+    this.pagesAvailable = []
     this.inner.style.height = `${this.rowHeight * this.rows.length}px`
     this.padRows = padding || 50
     this.padding = this.padRows * this.rowHeight
@@ -22,17 +23,25 @@ class Unendlich {
   getPage (i) {
     if (this.pages[i]) return this.pages[i]
 
-    this.pages[i] = document.createElement('div')
-    Object.assign(this.pages[i].style, {
-      height:
-        (i < this.numPages - 1
-          ? this.pageHeight
-          : this.rows.length % this.pageRows * this.rowHeight) + 'px',
-      position: 'absolute',
-      top: `${i * this.pageHeight}px`,
-      width: '100%'
-    })
-    this.inner.appendChild(this.pages[i])
+    if (this.pagesAvailable.length) {
+      const page = this.pagesAvailable.pop()
+      page.innerHTML = ''
+      page.style.top = `${i * this.pageHeight}px`
+      this.pages[i] = page
+    } else {
+      this.pages[i] = document.createElement('div')
+      Object.assign(this.pages[i].style, {
+        height:
+          (i < this.numPages - 1
+            ? this.pageHeight
+            : this.rows.length % this.pageRows * this.rowHeight) + 'px',
+        position: 'absolute',
+        top: `${i * this.pageHeight}px`,
+        width: '100%'
+      })
+      this.inner.appendChild(this.pages[i])
+    }
+
     return this.pages[i]
   }
 
@@ -58,7 +67,7 @@ class Unendlich {
 
     for (const i of Object.keys(this.pages)) {
       if (!pagesRendered[i]) {
-        this.inner.removeChild(this.pages[i])
+        this.pagesAvailable.push(this.pages[i])
         delete this.pages[i]
       }
     }
