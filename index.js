@@ -74,13 +74,12 @@ class Unendlich {
 
   fillPage (i) {
     const page = this.pages[i]
-    for (
-      let j = i * this.pageRows;
-      j < Math.min((i + 1) * this.pageRows, this.rows.length);
-      j++
-    ) {
-      page.appendChild(this.renderRow(this.rows[j]))
+    const frag = document.createDocumentFragment()
+    const limit = Math.min((i + 1) * this.pageRows, this.rows.length)
+    for (let j = i * this.pageRows; j < limit; j++) {
+      frag.appendChild(this.renderRow(this.rows[j]))
     }
+    page.appendChild(frag)
   }
 }
 
