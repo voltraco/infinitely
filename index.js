@@ -10,7 +10,8 @@ class Unendlich {
     this.outerHeight = this.outer.offsetHeight
     this.pageRows = page || 100
     this.pageHeight = this.pageRows * this.rowHeight
-    this.pages = Array(Math.ceil(this.rows.length / this.pageRows))
+    this.numPages = Math.ceil(this.rows.length / this.pageRows)
+    this.pages = []
     this.inner.style.height = `${this.rowHeight * this.rows.length}px`
     this.padRows = padding || 50
     this.padding = this.padRows * this.rowHeight
@@ -22,7 +23,7 @@ class Unendlich {
     if (this.pages[i]) return this.pages[i]
     this.pages[i] = document.createElement('div')
     Object.assign(this.pages[i].style, {
-      height: (i < this.pages.length - 1
+      height: (i < this.numPages - 1
         ? this.pageHeight
         : this.rows.length % this.pageRows * this.rowHeight) + 'px',
       position: 'absolute',
@@ -36,7 +37,7 @@ class Unendlich {
     const viewStart = this.outer.scrollTop
     const viewEnd = viewStart + this.outerHeight
 
-    for (let i = 0; i < this.pages.length; i++) {
+    for (let i = 0; i < this.numPages; i++) {
       const page = this.getPage(i)
       const start = i * this.pageHeight - this.padding
       const end = start + this.pageHeight + this.padding
