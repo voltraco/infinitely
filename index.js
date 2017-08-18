@@ -24,9 +24,10 @@ class Unendlich {
 
     this.pages[i] = document.createElement('div')
     Object.assign(this.pages[i].style, {
-      height: (i < this.numPages - 1
-        ? this.pageHeight
-        : this.rows.length % this.pageRows * this.rowHeight) + 'px',
+      height:
+        (i < this.numPages - 1
+          ? this.pageHeight
+          : this.rows.length % this.pageRows * this.rowHeight) + 'px',
       position: 'absolute',
       top: `${i * this.pageHeight}px`
     })

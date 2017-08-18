@@ -20,7 +20,9 @@ document.body.appendChild(outer)
 
 const render = row => {
   const el = document.createElement('li')
-  el.appendChild(document.createTextNode(`<li>${row.foo}: ${row.bar} (${row.beep})</li>`))
+  el.appendChild(
+    document.createTextNode(`<li>${row.foo}: ${row.bar} (${row.beep})</li>`)
+  )
   return el
 }
 
