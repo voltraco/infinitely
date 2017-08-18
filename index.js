@@ -21,6 +21,7 @@ class Unendlich {
 
   getPage (i) {
     if (this.pages[i]) return this.pages[i]
+
     this.pages[i] = document.createElement('div')
     Object.assign(this.pages[i].style, {
       height: (i < this.numPages - 1
@@ -36,9 +37,9 @@ class Unendlich {
   render ({ refresh } = {}) {
     const viewStart = this.outer.scrollTop
     const viewEnd = viewStart + this.outerHeight
+    const pagesRendered = {}
 
     for (let i = 0; i < this.numPages; i++) {
-      const page = this.getPage(i)
       const start = i * this.pageHeight - this.padding
       const end = start + this.pageHeight + this.padding
       if (
@@ -46,10 +47,17 @@ class Unendlich {
         (end >= viewStart && end <= viewEnd) ||
         (start <= viewStart && end >= viewEnd)
       ) {
-        if (refresh) page.innerHTML = ''
+        const page = this.getPage(i)
+        if (refresh && page.children.length) page.innerHTML = ''
         if (!page.children.length) this.fillPage(i)
-      } else {
-        if (page.children.length) page.innerHTML = ''
+        pagesRendered[i] = true
+      }
+    }
+
+    for (const i of Object.keys(this.pages)) {
+      if (!pagesRendered[i]) {
+        this.inner.removeChild(this.pages[i])
+        delete this.pages[i]
       }
     }
   }

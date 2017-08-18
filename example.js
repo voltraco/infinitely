@@ -37,7 +37,7 @@ const unendlich = new Unendlich({
 
 console.log(`Initialized in ${new Date() - start}ms`)
 
-/*setInterval(() => {
+setInterval(() => {
   for (const row of rows) row.beep = rand()
   unendlich.render({ refresh: true })
-}, 1000)*/
+}, 1000)
