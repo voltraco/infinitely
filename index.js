@@ -11,14 +11,6 @@ class Unendlich {
     this.pageRows = page || 100
     this.pageHeight = this.pageRows * this.rowHeight
     this.pages = Array(Math.ceil(this.rows.length / this.pageRows))
-    for (let i = 0; i < this.pages.length; i++) {
-      this.pages[i] = document.createElement('div')
-      this.pages[i].style.height =
-        (i < this.pages.length - 1
-          ? this.pageHeight
-          : this.rows.length % this.pageRows * this.rowHeight) + 'px'
-      this.inner.appendChild(this.pages[i])
-    }
     this.inner.style.height = `${this.rowHeight * this.rows.length}px`
     this.padRows = padding || 50
     this.padding = this.padRows * this.rowHeight
@@ -26,12 +18,26 @@ class Unendlich {
     this.outer.addEventListener('scroll', throttle(() => this.render()))
   }
 
+  getPage (i) {
+    if (this.pages[i]) return this.pages[i]
+    this.pages[i] = document.createElement('div')
+    Object.assign(this.pages[i].style, {
+      height: (i < this.pages.length - 1
+        ? this.pageHeight
+        : this.rows.length % this.pageRows * this.rowHeight) + 'px',
+      position: 'absolute',
+      top: `${i * this.pageHeight}px`
+    })
+    this.inner.appendChild(this.pages[i])
+    return this.pages[i]
+  }
+
   render ({ refresh } = {}) {
     const viewStart = this.outer.scrollTop
     const viewEnd = viewStart + this.outerHeight
 
     for (let i = 0; i < this.pages.length; i++) {
-      const page = this.pages[i]
+      const page = this.getPage(i)
       const start = i * this.pageHeight - this.padding
       const end = start + this.pageHeight + this.padding
       if (

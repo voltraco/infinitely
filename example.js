@@ -2,9 +2,11 @@ const Unendlich = require('.')
 const html = require('bel')
 
 const rand = () => Math.random().toString(16).slice(2)
+const count = 2e5
+console.log(`${count} rows`)
 
 const rows = []
-for (let i = 0; i < 2e5; i++) {
+for (let i = 0; i < count; i++) {
   rows.push({
     foo: String(new Date()),
     bar: 'beep',
@@ -13,9 +15,14 @@ for (let i = 0; i < 2e5; i++) {
 }
 
 const inner = html`<div></div>`
-const outer = html`<ul style="height: 800px; width: 600px; overflow: auto">${inner}</ul>`
+const outer = html`<ul style="height: 800px; width: 600px; overflow: auto; position: relative">${inner}</ul>`
 document.body.appendChild(outer)
-const render = row => html`<li>${row.foo}: ${row.bar} (${row.beep})</li>`
+
+const render = row => {
+  const el = document.createElement('li')
+  el.appendChild(document.createTextNode(`<li>${row.foo}: ${row.bar} (${row.beep})</li>`))
+  return el
+}
 
 const start = new Date()
 
@@ -30,7 +37,7 @@ const unendlich = new Unendlich({
 
 console.log(`Initialized in ${new Date() - start}ms`)
 
-setInterval(() => {
+/*setInterval(() => {
   for (const row of rows) row.beep = rand()
   unendlich.render({ refresh: true })
-}, 1000)
+}, 1000)*/
