@@ -115,12 +115,14 @@ class Unendlich {
 
   updatePage (i) {
     const page = this.pages[i]
+    const start = i * this.pageRows
     const limit = Math.min((i + 1) * this.pageRows, this.rows.length)
-    for (let j = i * this.pageRows, rowIdx = 0; j < limit; j++, rowIdx++) {
+    for (let j = start, rowIdx = 0; j < limit; j++, rowIdx++) {
       if (page.children[rowIdx]) {
         this.updateRow(this.rows[j], page.children[rowIdx])
       } else page.appendChild(this.renderRow(this.rows[j]))
     }
+    while (page.children.length > limit - start) { page.removeChild(page.lastChild) }
   }
 }
 
