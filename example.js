@@ -26,6 +26,10 @@ const render = row => {
   return el
 }
 
+const update = (row, el) => {
+  el.innerText = `<li>${row.foo}: ${row.bar} (${row.beep})</li>`
+}
+
 const start = new Date()
 
 const unendlich = new Unendlich({
@@ -33,6 +37,7 @@ const unendlich = new Unendlich({
   inner,
   outer,
   render,
+  update,
   page: 100,
   padding: 50
 })

@@ -49,9 +49,19 @@ $ npm install unendlich
 
 ## API
 
-### new Unendlich({ rows, inner, outer, render, page = 100, padding = 50 })
+### new Unendlich({ rows, inner, outer, render, update, page = 100, padding = 50 })
 
 Create a new instance and `.render()` it.
+
+For extra performance, pass `update` which takes existing old row elements and updates them, instead of
+creating new ones. For example:
+
+```js
+{
+  render: row => html`<li>${row.foo}: ${row.bar} (${row.beep})</li>`,
+  update: (row, el) => el.innerHTML = `${row.foo}: ${row.bar} (${row.beep})`
+}
+```
 
 ### Unendlich#render({ refresh })
 

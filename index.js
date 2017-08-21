@@ -1,11 +1,12 @@
 const throttle = require('raf-throttle').default
 
 class Unendlich {
-  constructor ({ rows, inner, outer, render, page, padding }) {
+  constructor ({ rows, inner, outer, render, update, page, padding }) {
     this.rows = rows
     this.inner = inner
     this.outer = outer
     this.renderRow = render
+    this.updateRow = update
     this.rowHeight = this.getRowHeight()
     this.outerHeight = this.outer.offsetHeight
     this.pageRows = page || 100
@@ -21,16 +22,17 @@ class Unendlich {
   }
 
   getPage (i) {
-    if (this.pages[i]) return this.pages[i]
-    this.pages[i] = this.pagesAvailable.length
-      ? this.getAvailablePage(i)
-      : this.createNewPage(i)
-    return this.pages[i]
+    if (this.pages[i]) return [this.pages[i], 'ok']
+    let state
+    ;[this.pages[i], state] = this.pagesAvailable.length
+      ? [this.getAvailablePage(i), 'old']
+      : [this.createNewPage(i), 'fresh']
+    return [this.pages[i], state]
   }
 
   getAvailablePage (i) {
     const page = this.pagesAvailable.pop()
-    page.innerHTML = ''
+    if (!this.updateRow) page.innerHTML = ''
     page.style.top = this.getPageTop(i)
     if (i === this.numPages - 1) page.style.height = this.getLastPageHeight()
     return page
@@ -65,9 +67,15 @@ class Unendlich {
     const pagesRendered = {}
 
     for (let i = start; i <= end; i++) {
-      const page = this.getPage(i)
-      if (refresh && page.children.length) page.innerHTML = ''
-      if (!page.children.length) this.fillPage(i)
+      const [page, state] = this.getPage(i)
+      if (state === 'fresh') {
+        this.fillPage(i)
+      } else if ((refresh || state === 'old') && !this.updateRow) {
+        page.innerHTML = ''
+        this.fillPage(i)
+      } else if ((refresh || state === 'old') && this.updateRow) {
+        this.updatePage(i)
+      }
       pagesRendered[i] = true
     }
 
@@ -103,6 +111,16 @@ class Unendlich {
       frag.appendChild(this.renderRow(this.rows[j]))
     }
     page.appendChild(frag)
+  }
+
+  updatePage (i) {
+    const page = this.pages[i]
+    const limit = Math.min((i + 1) * this.pageRows, this.rows.length)
+    for (let j = i * this.pageRows, rowIdx = 0; j < limit; j++, rowIdx++) {
+      if (page.children[rowIdx]) {
+        this.updateRow(this.rows[j], page.children[rowIdx])
+      } else page.appendChild(this.renderRow(this.rows[j]))
+    }
   }
 }
 
