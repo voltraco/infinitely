@@ -67,6 +67,10 @@ creating new ones. For example:
 
 Force a render, if `reset` is `true` it will also rerender already rendered rows.
 
+### Unendlich#setRows(rows)
+
+Update the row content. Doesn't trigger a rerender by itself.
+
 ## License
 
 MIT

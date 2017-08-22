@@ -38,7 +38,7 @@ const unendlich = new Unendlich({
   outer,
   render,
   update,
-  page: 100,
+  page: 10,
   padding: 50,
   debug: true
 })
@@ -49,3 +49,9 @@ setInterval(() => {
   for (const row of rows) row.beep = rand()
   unendlich.render({ refresh: true })
 }, 1000)
+
+window.half = () => {
+  rows.length = Math.round(rows.length / 2)
+  unendlich.setRows(rows)
+  unendlich.render({ refresh: true })
+}

@@ -2,55 +2,53 @@ const throttle = require('raf-throttle').default
 
 class Unendlich {
   constructor ({ rows, inner, outer, render, update, page, padding, debug }) {
-    this.rows = rows
     this.inner = inner
     this.outer = outer
     this.renderRow = render
     this.updateRow = update
     this.debug = debug
-    this.rowHeight = this.getRowHeight()
+    this.rowHeight = this.getRowHeight(rows[0])
     this.outerHeight = this.outer.offsetHeight
     this.pageRows = page || 100
+    this.setRows(rows)
     this.pageHeight = this.pageRows * this.rowHeight
-    this.numPages = Math.ceil(this.rows.length / this.pageRows)
     this.pages = {}
     this.pagesAvailable = []
-    this.inner.style.height = `${this.rowHeight * this.rows.length}px`
     this.padRows = padding || 50
     this.padding = this.padRows * this.rowHeight
     this.render()
     this.outer.addEventListener('scroll', throttle(() => this.render()))
   }
 
+  setRows (rows) {
+    this.rows = rows
+    this.numPages = Math.ceil(this.rows.length / this.pageRows)
+    this.inner.style.height = `${this.rowHeight * this.rows.length}px`
+  }
+
   getPage (i) {
-    if (this.pages[i]) return [this.pages[i], 'ok']
-    let state
-    ;[this.pages[i], state] = this.pagesAvailable.length
-      ? [this.getAvailablePage(i), 'old']
-      : [this.createNewPage(i), 'fresh']
-    return [this.pages[i], state]
+    let page, state
+    ;[page, state] = this.pages[i]
+      ? [this.pages[i], 'ok']
+      : this.pagesAvailable.length
+        ? [this.getAvailablePage(i), 'old']
+        : [this.createNewPage(i), 'fresh']
+    this.pages[i] = page
+    page.style.height =
+      i < this.numPages - 1 ? `${this.pageHeight}px` : this.getLastPageHeight()
+    return [page, state]
   }
 
   getAvailablePage (i) {
     const page = this.pagesAvailable.pop()
-    if (!this.updateRow) page.innerHTML = ''
-    Object.assign(page.style, {
-      top: this.getPageTop(i),
-      height:
-        i < this.numPages - 1
-          ? `${this.pageHeight}px`
-          : this.getLastPageHeight()
-    })
+    page.style.top = this.getPageTop(i)
+    this.inner.appendChild(page)
     return page
   }
 
   createNewPage (i) {
     const page = document.createElement('div')
     Object.assign(page.style, {
-      height:
-        i < this.numPages - 1
-          ? `${this.pageHeight}px`
-          : this.getLastPageHeight(),
       position: 'absolute',
       top: this.getPageTop(i),
       width: '100%'
@@ -80,11 +78,13 @@ class Unendlich {
       const [page, state] = this.getPage(i)
       if (state === 'fresh') {
         this.fillPage(i)
-      } else if ((refresh || state === 'old') && !this.updateRow) {
-        page.innerHTML = ''
-        this.fillPage(i)
-      } else if ((refresh || state === 'old') && this.updateRow) {
-        this.updatePage(i)
+      } else if (refresh || state === 'old') {
+        if (this.updateRow) {
+          this.updatePage(i)
+        } else {
+          page.innerHTML = ''
+          this.fillPage(i)
+        }
       }
       pagesRendered[i] = true
     }
@@ -92,6 +92,7 @@ class Unendlich {
     for (const i of Object.keys(this.pages)) {
       if (!pagesRendered[i]) {
         this.pagesAvailable.push(this.pages[i])
+        this.inner.removeChild(this.pages[i])
         delete this.pages[i]
       }
     }
@@ -105,11 +106,11 @@ class Unendlich {
     return `${this.rows.length % this.pageRows * this.rowHeight}px`
   }
 
-  getRowHeight () {
-    const row = this.renderRow(this.rows[0])
-    this.inner.appendChild(row)
-    const height = row.offsetHeight
-    this.inner.removeChild(row)
+  getRowHeight (row) {
+    const el = this.renderRow(row)
+    this.inner.appendChild(el)
+    const height = el.offsetHeight
+    this.inner.removeChild(el)
     return height
   }
 
@@ -127,6 +128,11 @@ class Unendlich {
     const page = this.pages[i]
     const start = i * this.pageRows
     const limit = Math.min((i + 1) * this.pageRows, this.rows.length)
+    if (start > limit) {
+      this.inner.removeChild(page)
+      delete this.pages[i]
+      return
+    }
     for (let j = start, rowIdx = 0; j < limit; j++, rowIdx++) {
       if (page.children[rowIdx]) {
         this.updateRow(this.rows[j], page.children[rowIdx])
