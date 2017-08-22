@@ -127,7 +127,9 @@ class Unendlich {
         this.updateRow(this.rows[j], page.children[rowIdx])
       } else page.appendChild(this.renderRow(this.rows[j]))
     }
-    while (page.children.length > limit - start) { page.removeChild(page.lastChild) }
+    while (page.children.length > limit - start) {
+      page.removeChild(page.lastChild)
+    }
   }
 }
 
