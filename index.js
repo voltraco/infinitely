@@ -33,8 +33,13 @@ class Unendlich {
   getAvailablePage (i) {
     const page = this.pagesAvailable.pop()
     if (!this.updateRow) page.innerHTML = ''
-    page.style.top = this.getPageTop(i)
-    if (i === this.numPages - 1) page.style.height = this.getLastPageHeight()
+    Object.assign(page.style, {
+      top: this.getPageTop(i),
+      height:
+        i < this.numPages - 1
+          ? `${this.pageHeight}px`
+          : this.getLastPageHeight()
+    })
     return page
   }
 
