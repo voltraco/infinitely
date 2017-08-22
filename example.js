@@ -39,7 +39,8 @@ const unendlich = new Unendlich({
   render,
   update,
   page: 100,
-  padding: 50
+  padding: 50,
+  debug: true
 })
 
 console.log(`Initialized in ${new Date() - start}ms`)

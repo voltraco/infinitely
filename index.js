@@ -1,12 +1,13 @@
 const throttle = require('raf-throttle').default
 
 class Unendlich {
-  constructor ({ rows, inner, outer, render, update, page, padding }) {
+  constructor ({ rows, inner, outer, render, update, page, padding, debug }) {
     this.rows = rows
     this.inner = inner
     this.outer = outer
     this.renderRow = render
     this.updateRow = update
+    this.debug = debug
     this.rowHeight = this.getRowHeight()
     this.outerHeight = this.outer.offsetHeight
     this.pageRows = page || 100
@@ -54,6 +55,10 @@ class Unendlich {
       top: this.getPageTop(i),
       width: '100%'
     })
+    if (this.debug) {
+      page.style.backgroundColor = `hsla(${Math.random() *
+        356}, 100%, 50%, 0.5)`
+    }
     this.inner.appendChild(page)
     return page
   }
