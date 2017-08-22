@@ -2,7 +2,7 @@ const Unendlich = require('.')
 const html = require('bel')
 
 const rand = () => Math.random().toString(16).slice(2)
-const count = 2e5
+const count = 2e5 - 80
 console.log(`${count} rows`)
 
 const rows = []
@@ -21,13 +21,13 @@ document.body.appendChild(outer)
 const render = row => {
   const el = document.createElement('li')
   el.appendChild(
-    document.createTextNode(`<li>${row.foo}: ${row.bar} (${row.beep})</li>`)
+    document.createTextNode(`${row.foo}: ${row.bar} (${row.beep})`)
   )
   return el
 }
 
 const update = (row, el) => {
-  el.innerText = `<li>${row.foo}: ${row.bar} (${row.beep})</li>`
+  el.innerText = `${row.foo}: ${row.bar} (${row.beep})`
 }
 
 const start = new Date()
