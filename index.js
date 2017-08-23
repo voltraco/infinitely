@@ -7,7 +7,7 @@ class Unendlich {
     this.renderRow = render
     this.updateRow = update
     this.debug = debug
-    this.rowHeight = this.getRowHeight(rows[0])
+    this.rowHeight = rows.length ? this.getRowHeight(rows[0]) : 0
     this.outerHeight = this.outer.offsetHeight
     this.pageRows = page || 100
     this.setRows(rows)
