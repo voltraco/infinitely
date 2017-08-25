@@ -7,7 +7,6 @@ class Unendlich {
     this.renderRow = render
     this.updateRow = update
     this.debug = debug
-    this.rowHeight = rows.length ? this.getRowHeight(rows[0]) : 0
     this.outerHeight = this.outer.offsetHeight
     this.pageRows = page || 100
     this.setRows(rows)
@@ -23,6 +22,7 @@ class Unendlich {
   setRows (rows) {
     this.rows = rows
     this.numPages = Math.ceil(this.rows.length / this.pageRows)
+    this.rowHeight = rows.length ? this.getRowHeight(rows[0]) : 0
     this.inner.style.height = `${this.rowHeight * this.rows.length}px`
   }
 
