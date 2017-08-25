@@ -9,12 +9,10 @@ class Unendlich {
     this.debug = debug
     this.outerHeight = this.outer.offsetHeight
     this.pageRows = page || 100
-    this.setRows(rows)
-    this.pageHeight = this.pageRows * this.rowHeight
+    this.padRows = padding || 50
     this.pages = {}
     this.pagesAvailable = []
-    this.padRows = padding || 50
-    this.padding = this.padRows * this.rowHeight
+    this.setRows(rows)
     this.render()
     this.outer.addEventListener('scroll', throttle(() => this.render()))
   }
@@ -24,6 +22,8 @@ class Unendlich {
     this.numPages = Math.ceil(this.rows.length / this.pageRows)
     this.rowHeight = rows.length ? this.getRowHeight(rows[0]) : 0
     this.inner.style.height = `${this.rowHeight * this.rows.length}px`
+    this.pageHeight = this.pageRows * this.rowHeight
+    this.padding = this.padRows * this.rowHeight
   }
 
   getPage (i) {
