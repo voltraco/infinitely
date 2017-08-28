@@ -5,7 +5,8 @@
   "repository": "voltraco/unendlich",
   "scripts": {
     "start": "beefy example.js",
-    "test": "prettier-standard '*.js' && standard && browserify test.js | tape-run"
+    "test": "prettier-standard '*.js' && standard && npm run test:browser",
+    "test:browser": "browserify test.js | tape-run"
   },
   "devDependencies": {
     "beefy": "^2.1.8",
