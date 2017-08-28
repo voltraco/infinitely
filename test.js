@@ -14,17 +14,20 @@ test('Unendlich', t => {
     t.end()
   })
   t.test('.rowHeight', t => {
-    const rows = [{}]
+    const rows = [{ height: 13 }]
     const inner = document.createElement('div')
     const outer = document.createElement('div')
-    const render = () => {
+    let render = row => {
       const el = document.createElement('div')
-      el.style.height = '13px'
+      el.style.height = `${row.height}px`
       return el
     }
     document.body.appendChild(inner)
     const view = new Unendlich({ rows, inner, outer, render })
     t.equal(view.rowHeight, 13)
+    rows[0].height = 14
+    view.setRows(rows)
+    t.equal(view.rowHeight, 14)
     t.end()
   })
   t.test('.numPages', t => {
