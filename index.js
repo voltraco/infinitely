@@ -1,15 +1,24 @@
 const throttle = require('raf-throttle').default
 
 class Unendlich {
-  constructor ({ rows, inner, outer, render, update, page, padding, debug }) {
+  constructor ({
+    rows,
+    inner,
+    outer,
+    render,
+    update = null,
+    page = 100,
+    padding = 50,
+    debug = false
+  }) {
     this.inner = inner
     this.outer = outer
     this.renderRow = render
     this.updateRow = update
     this.debug = debug
     this.outerHeight = this.outer.offsetHeight
-    this.pageRows = page || 100
-    this.padRows = padding || 50
+    this.pageRows = page
+    this.padRows = padding
     this.pages = {}
     this.pagesAvailable = []
     this.setRows(rows)
