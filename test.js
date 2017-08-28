@@ -83,5 +83,23 @@ test('Unendlich', t => {
     t.equal(view.pageHeight, page * rows[0].height)
     t.end()
   })
+  t.test('.pageHeight', t => {
+    const rows = [{ height: 13 }]
+    const inner = document.createElement('div')
+    const outer = document.createElement('div')
+    const render = row => {
+      const el = document.createElement('div')
+      el.style.height = `${row.height}px`
+      return el
+    }
+    document.body.appendChild(inner)
+    const padding = 50
+    const view = new Unendlich({ rows, inner, outer, render, padding })
+    t.equal(view.padding, padding * rows[0].height)
+    rows[0].height = 14
+    view.setRows(rows)
+    t.equal(view.padding, padding * rows[0].height)
+    t.end()
+  })
   t.end()
 })
