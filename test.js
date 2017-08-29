@@ -121,5 +121,20 @@ test('Unendlich', t => {
 
     t.end()
   })
+  t.test('.getAvailablePage(i)', t => {
+    const rows = []
+    const inner = document.createElement('div')
+    const outer = document.createElement('div')
+    const render = row => document.createElement('div')
+    const view = new Unendlich({ rows, inner, outer, render })
+
+    view.pagesAvailable.push(view.createNewPage(0))
+    const page = view.getAvailablePage(1)
+
+    t.ok(inner.contains(page))
+    t.equal(page.style.top, `${view.pageHeight}px`)
+
+    t.end()
+  })
   t.end()
 })
