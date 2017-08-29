@@ -101,5 +101,25 @@ test('Unendlich', t => {
     t.equal(view.padding, padding * rows[0].height)
     t.end()
   })
+  t.test('.createNewPage(i)', t => {
+    const rows = []
+    const inner = document.createElement('div')
+    const outer = document.createElement('div')
+    const render = row => document.createElement('div')
+    const view = new Unendlich({ rows, inner, outer, render })
+
+    const page = view.createNewPage(0)
+    t.equal(page.tagName, 'DIV')
+    t.equal(page.style.position, 'absolute')
+    t.equal(page.style.top, '0px')
+    t.equal(page.style.width, '100%')
+    t.ok(inner.contains(page))
+
+    view.debug = true
+    const debugPage = view.createNewPage(0)
+    t.ok(debugPage.style.backgroundColor)
+
+    t.end()
+  })
   t.end()
 })
