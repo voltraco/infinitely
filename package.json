@@ -4,8 +4,9 @@
   "license": "MIT",
   "repository": "voltraco/unendlich",
   "scripts": {
+    "lint": "prettier-standard '*.js' && standard",
     "start": "beefy example.js",
-    "test": "prettier-standard '*.js' && standard && npm run test:browser",
+    "test": "npm run lint && npm run test:browser",
     "test:browser": "browserify test.js | tape-run"
   },
   "devDependencies": {
