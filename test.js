@@ -83,7 +83,7 @@ test('Unendlich', t => {
     t.equal(view.pageHeight, page * rows[0].height)
     t.end()
   })
-  t.test('.pageHeight', t => {
+  t.test('.padding', t => {
     const rows = [{ height: 13 }]
     const inner = document.createElement('div')
     const outer = document.createElement('div')
