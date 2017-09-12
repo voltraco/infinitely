@@ -35,6 +35,12 @@ class Unendlich {
     this.padding = this.padRows * this.rowHeight
   }
 
+  setHeight (height) {
+    this.outer.style.height = height
+    this.outerHeight = this.outer.offsetHeight
+    this.render()
+  }
+
   getPage (i) {
     let page, state
     ;[page, state] = this.pages[i]

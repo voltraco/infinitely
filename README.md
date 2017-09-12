@@ -72,6 +72,10 @@ Force a render, if `reset` is `true` it will also rerender already rendered rows
 
 Update the row content. Doesn't trigger a rerender by itself.
 
+### Unendlich#setHeight(height)
+
+Update the #outer element's height. Example: `unendlich.setHeight('200px')`.
+
 ## License
 
 MIT
