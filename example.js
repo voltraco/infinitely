@@ -55,3 +55,4 @@ window.half = () => {
   unendlich.setRows(rows)
   unendlich.render({ refresh: true })
 }
+window.unendlich = unendlich
