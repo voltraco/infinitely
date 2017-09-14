@@ -36,6 +36,7 @@ class Unendlich {
   }
 
   setHeight (height, { render } = {}) {
+    height = Math.max(height, 0)
     this.outer.style.height = height
     this.outerHeight = this.outer.offsetHeight
     if (render !== false) this.render()
