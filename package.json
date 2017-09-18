@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "prettier-standard '*.js' && standard",
     "start": "beefy example.js",
+    "start-multi": "beefy example-multi.js",
     "test": "npm run lint && npm run test:browser",
     "test:browser": "browserify test.js | tape-run"
   },
