@@ -51,12 +51,12 @@ class Unendlich {
     this.pages[i] = page
     page.style.height =
       i < this.numPages - 1 ? `${this.pageHeight}px` : this.getLastPageHeight()
+    page.style.top = this.getPageTop(i)
     return [page, state]
   }
 
   getAvailablePage (i) {
     const page = this.pagesAvailable.pop()
-    page.style.top = this.getPageTop(i)
     this.inner.appendChild(page)
     return page
   }
@@ -65,7 +65,6 @@ class Unendlich {
     const page = document.createElement('div')
     Object.assign(page.style, {
       position: 'absolute',
-      top: this.getPageTop(i),
       width: '100%'
     })
     if (this.debug) {

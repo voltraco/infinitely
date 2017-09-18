@@ -111,7 +111,6 @@ test('Unendlich', t => {
     const page = view.createNewPage(0)
     t.equal(page.tagName, 'DIV')
     t.equal(page.style.position, 'absolute')
-    t.equal(page.style.top, '0px')
     t.equal(page.style.width, '100%')
     t.ok(inner.contains(page))
 
@@ -132,7 +131,6 @@ test('Unendlich', t => {
     const page = view.getAvailablePage(1)
 
     t.ok(inner.contains(page))
-    t.equal(page.style.top, `${view.pageHeight}px`)
 
     t.end()
   })
