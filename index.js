@@ -75,8 +75,8 @@ class Unendlich {
     return page
   }
 
-  render ({ refresh } = {}) {
-    if (refresh) this.setRows(this.rows)
+  render ({ refresh, setRows } = {}) {
+    if (refresh && setRows !== false) this.setRows(this.rows)
     const viewStart = this.outer.scrollTop
     const viewEnd = viewStart + this.outerHeight
     const start = Math.max(
