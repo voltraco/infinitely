@@ -65,7 +65,7 @@ class Unendlich {
     const page = document.createElement('div')
     Object.assign(page.style, {
       position: 'absolute',
-      width: '100%'
+      minWidth: '100%'
     })
     if (this.debug) {
       page.style.backgroundColor = `hsla(${Math.random() *
