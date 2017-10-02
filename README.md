@@ -50,7 +50,7 @@ $ npm install unendlich
 
 ## API
 
-### new Unendlich({ rows, inner, outer, render, update, page = 100, padding = 50, debug = false })
+### new Unendlich({ rows, inner, outer, render, update, page = 100, padding = 50, rowHeight, debug = false })
 
 Create a new instance and `.render()` it.
 

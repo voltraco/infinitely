@@ -25,9 +25,6 @@ test('Unendlich', t => {
     document.body.appendChild(inner)
     const view = new Unendlich({ rows, inner, outer, render })
     t.equal(view.rowHeight, 13)
-    rows[0].height = 14
-    view.setRows(rows)
-    t.equal(view.rowHeight, 14)
     t.end()
   })
   t.test('.numPages', t => {
