@@ -28,6 +28,11 @@ class Unendlich {
     this.outer.addEventListener('scroll', throttle(() => this.render()))
   }
 
+  async getRow (idx) {
+    const el = this.rows[idx]
+    return typeof el === 'function' ? el() : el
+  }
+
   setRows (rows) {
     this.rows = rows
     this.numPages = Math.ceil(this.rows.length / this.pageRows)
@@ -77,7 +82,7 @@ class Unendlich {
     return page
   }
 
-  render ({ refresh, setRows } = {}) {
+  async render ({ refresh, setRows } = {}) {
     if (refresh && setRows !== false) this.setRows(this.rows)
     const viewStart = this.outer.scrollTop
     const viewEnd = viewStart + this.outerHeight
@@ -94,13 +99,13 @@ class Unendlich {
     for (let i = start; i <= end; i++) {
       const [page, state] = this.getPage(i)
       if (state === 'fresh') {
-        this.fillPage(i)
+        await this.fillPage(i)
       } else if (refresh || state === 'old') {
         if (this.updateRow) {
-          this.updatePage(i)
+          await this.updatePage(i)
         } else {
           page.innerHTML = ''
-          this.fillPage(i)
+          await this.fillPage(i)
         }
       }
       pagesRendered[i] = true
@@ -131,17 +136,17 @@ class Unendlich {
     return height
   }
 
-  fillPage (i) {
+  async fillPage (i) {
     const page = this.pages[i]
     const frag = document.createDocumentFragment()
     const limit = Math.min((i + 1) * this.pageRows, this.rows.length)
     for (let j = i * this.pageRows; j < limit; j++) {
-      frag.appendChild(this.renderRow(this.rows[j]))
+      frag.appendChild(this.renderRow(await this.getRow(j)))
     }
     page.appendChild(frag)
   }
 
-  updatePage (i) {
+  async updatePage (i) {
     const page = this.pages[i]
     const start = i * this.pageRows
     const limit = Math.min((i + 1) * this.pageRows, this.rows.length)
@@ -152,8 +157,8 @@ class Unendlich {
     }
     for (let j = start, rowIdx = 0; j < limit; j++, rowIdx++) {
       if (page.children[rowIdx]) {
-        this.updateRow(this.rows[j], page.children[rowIdx])
-      } else page.appendChild(this.renderRow(this.rows[j]))
+        this.updateRow(await this.getRow(j), page.children[rowIdx])
+      } else page.appendChild(this.renderRow(await this.getRow(j)))
     }
     while (page.children.length > limit - start) {
       page.removeChild(page.lastChild)

@@ -42,6 +42,16 @@ const example = new Unendlich({
 })
 ```
 
+## Async support
+
+A row element can also by an `async` function, which will then be resolved before rendering:
+
+```js
+const rows = [
+  async () => fetch(url)
+]
+```
+
 ## Installation
 
 ```bash
