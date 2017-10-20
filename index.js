@@ -1,4 +1,5 @@
 const throttle = require('raf-throttle').default
+const assert = require('assert')
 
 class Unendlich {
   constructor ({
@@ -12,6 +13,10 @@ class Unendlich {
     rowHeight = 0,
     debug = false
   }) {
+    assert(inner, '.inner required')
+    assert(outer, '.outer required')
+    assert(render, '.render required')
+
     this.inner = inner
     this.outer = outer
     this.renderRow = render
