@@ -13,6 +13,7 @@ test('Unendlich', t => {
     t.ok(view)
     t.end()
   })
+
   t.test('.rowHeight', t => {
     const rows = [{ height: 13 }]
     const inner = document.createElement('div')
@@ -27,6 +28,7 @@ test('Unendlich', t => {
     t.equal(view.rowHeight, 13)
     t.end()
   })
+
   t.test('.numPages', t => {
     let rows = Array(123)
     const inner = document.createElement('div')
@@ -45,6 +47,7 @@ test('Unendlich', t => {
     t.equal(view.numPages, Math.ceil(rows.length / page))
     t.end()
   })
+
   t.test('inner height', t => {
     let rows = Array(123)
     const inner = document.createElement('div')
@@ -62,6 +65,7 @@ test('Unendlich', t => {
     t.equal(inner.style.height, `${13 * rows.length}px`)
     t.end()
   })
+
   t.test('.pageHeight', t => {
     const rows = [{ height: 13 }]
     const inner = document.createElement('div')
@@ -80,6 +84,7 @@ test('Unendlich', t => {
     t.equal(view.pageHeight, page * rows[0].height)
     t.end()
   })
+
   t.test('.padding', t => {
     const rows = [{ height: 13 }]
     const inner = document.createElement('div')
@@ -98,6 +103,7 @@ test('Unendlich', t => {
     t.equal(view.padding, padding * rows[0].height)
     t.end()
   })
+
   t.test('.createNewPage(i)', t => {
     const rows = []
     const inner = document.createElement('div')
@@ -117,6 +123,7 @@ test('Unendlich', t => {
 
     t.end()
   })
+
   t.test('.getAvailablePage(i)', t => {
     const rows = []
     const inner = document.createElement('div')
@@ -131,5 +138,6 @@ test('Unendlich', t => {
 
     t.end()
   })
+
   t.end()
 })

@@ -17,7 +17,6 @@ The rest is up to you:
 
 ```js
 const Unendlich = require('unendlich')
-const html = require('bel')
 
 const rows = []
 for (let i = 0; i < 1e5; i++) {
@@ -28,15 +27,15 @@ for (let i = 0; i < 1e5; i++) {
   })
 }
 
-const inner = html`<div></div>`
-const outer = html`<ul style="height: 800px; width: 600px; overflow: auto">${inner}</ul>`
+const inner = `<div></div>`
+const outer = `<ul style="height: 800px; width: 600px; overflow: auto">${inner}</ul>`
 document.body.appendChild(outer)
 
 const example = new Unendlich({
   rows,
   inner,
   outer,
-  render: row => html`<li>${row.foo}: ${row.bar} (${row.beep})</li>`,
+  render: row => `<li>${row.foo}: ${row.bar} (${row.beep})</li>`,
   page: 100,
   padding: 50
 })
@@ -69,7 +68,7 @@ creating new ones. For example:
 
 ```js
 {
-  render: row => html`<li>${row.foo}: ${row.bar} (${row.beep})</li>`,
+  render: row => `<li>${row.foo}: ${row.bar} (${row.beep})</li>`,
   update: (row, el) => el.innerHTML = `${row.foo}: ${row.bar} (${row.beep})`
 }
 ```

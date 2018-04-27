@@ -5,22 +5,15 @@
   "repository": "voltraco/unendlich",
   "scripts": {
     "lint": "prettier-standard '*.js' && standard",
-    "start": "beefy example.js",
-    "start-multi": "beefy example-multi.js",
-    "start-async": "beefy example-async.js",
     "test": "npm run lint && npm run test:browser",
     "test:browser": "browserify test.js | tape-run"
   },
   "devDependencies": {
     "beefy": "^2.1.8",
-    "bel": "^5.0.3",
     "browserify": "^14.4.0",
     "prettier-standard": "^6.0.0",
     "standard": "^10.0.3",
     "tape": "^4.8.0",
     "tape-run": "^3.0.0"
-  },
-  "dependencies": {
-    "raf-throttle": "^2.0.3"
   }
 }

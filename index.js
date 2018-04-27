@@ -1,4 +1,3 @@
-const throttle = require('raf-throttle').default
 const assert = require('assert')
 
 class Unendlich {
@@ -30,7 +29,9 @@ class Unendlich {
     this.pagesAvailable = []
     this.setRows(rows)
     this.render()
-    this.outer.addEventListener('scroll', throttle(() => this.render()))
+    this.outer.addEventListener('scroll', () => this.render(), {
+      passive: true
+    })
   }
 
   async getRow (idx) {
@@ -130,7 +131,7 @@ class Unendlich {
   }
 
   getLastPageHeight (i) {
-    return `${this.rows.length % this.pageRows * this.rowHeight}px`
+    return `${(this.rows.length % this.pageRows) * this.rowHeight}px`
   }
 
   getRowHeight (row) {
