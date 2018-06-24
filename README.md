@@ -18,7 +18,7 @@ There needs to be an outer and an inner element, the outer element having
 The rest is up to you:
 
 ```js
-const Unendlich = require('unendlich')
+const Infinitely = require('unendlich')
 
 const rows = []
 for (let i = 0; i < 1e5; i++) {
@@ -33,7 +33,7 @@ const inner = `<div></div>`
 const outer = `<ul style="height: 800px; width: 600px; overflow: auto">${inner}</ul>`
 document.body.appendChild(outer)
 
-const example = new Unendlich({
+const example = new Infinitely({
   rows,
   inner,
   outer,
@@ -63,7 +63,7 @@ $ npm install unendlich
 ## CONSTRUCTOR
 
 ```js
-new Unendlich({
+new Infinitely({
   rows,
   inner,
   outer,
@@ -90,14 +90,14 @@ creating new ones. For example:
 
 ## METHODS
 
-#### Unendlich#render({ refresh })
+#### Infinitely#render({ refresh })
 
 Force a render, if `reset` is `true` it will also rerender already rendered rows.
 
-#### Unendlich#setRows(rows)
+#### Infinitely#setRows(rows)
 
 Update the row content. Doesn't trigger a rerender by itself.
 
-#### Unendlich#setHeight(height, { render = true })
+#### Infinitely#setHeight(height, { render = true })
 
 Update the #outer element's height. Example: `unendlich.setHeight('200px')`.

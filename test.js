@@ -1,15 +1,15 @@
 'use strict'
 
 const test = require('tape')
-const Unendlich = require('.')
+const Infinitely = require('.')
 
-test('Unendlich', t => {
+test('Infinitely', t => {
   t.test('no rows', t => {
     const rows = []
     const inner = document.createElement('div')
     const outer = document.createElement('div')
     const render = () => {}
-    const view = new Unendlich({ rows, inner, outer, render })
+    const view = new Infinitely({ rows, inner, outer, render })
     t.ok(view)
     t.end()
   })
@@ -24,7 +24,7 @@ test('Unendlich', t => {
       return el
     }
     document.body.appendChild(inner)
-    const view = new Unendlich({ rows, inner, outer, render })
+    const view = new Infinitely({ rows, inner, outer, render })
     t.equal(view.rowHeight, 13)
     t.end()
   })
@@ -40,7 +40,7 @@ test('Unendlich', t => {
     }
     const page = 100
     document.body.appendChild(inner)
-    const view = new Unendlich({ rows, inner, outer, render, page })
+    const view = new Infinitely({ rows, inner, outer, render, page })
     t.equal(view.numPages, Math.ceil(rows.length / page))
     rows = Array(23)
     view.setRows(rows)
@@ -58,7 +58,7 @@ test('Unendlich', t => {
       return el
     }
     document.body.appendChild(inner)
-    const view = new Unendlich({ rows, inner, outer, render })
+    const view = new Infinitely({ rows, inner, outer, render })
     t.equal(inner.style.height, `${13 * rows.length}px`)
     rows = Array(23)
     view.setRows(rows)
@@ -77,7 +77,7 @@ test('Unendlich', t => {
     }
     document.body.appendChild(inner)
     const page = 100
-    const view = new Unendlich({ rows, inner, outer, render, page })
+    const view = new Infinitely({ rows, inner, outer, render, page })
     t.equal(view.pageHeight, page * rows[0].height)
     rows[0].height = 14
     view.setRows(rows)
@@ -96,7 +96,7 @@ test('Unendlich', t => {
     }
     document.body.appendChild(inner)
     const padding = 50
-    const view = new Unendlich({ rows, inner, outer, render, padding })
+    const view = new Infinitely({ rows, inner, outer, render, padding })
     t.equal(view.padding, padding * rows[0].height)
     rows[0].height = 14
     view.setRows(rows)
@@ -109,7 +109,7 @@ test('Unendlich', t => {
     const inner = document.createElement('div')
     const outer = document.createElement('div')
     const render = row => document.createElement('div')
-    const view = new Unendlich({ rows, inner, outer, render })
+    const view = new Infinitely({ rows, inner, outer, render })
 
     const page = view.createNewPage(0)
     t.equal(page.tagName, 'DIV')
@@ -129,7 +129,7 @@ test('Unendlich', t => {
     const inner = document.createElement('div')
     const outer = document.createElement('div')
     const render = row => document.createElement('div')
-    const view = new Unendlich({ rows, inner, outer, render })
+    const view = new Infinitely({ rows, inner, outer, render })
 
     view.pagesAvailable.push(view.createNewPage(0))
     const page = view.getAvailablePage(1)

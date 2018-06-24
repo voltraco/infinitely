@@ -1,6 +1,4 @@
-const assert = require('assert')
-
-class Unendlich {
+class Infinitely {
   constructor (args) {
     const {
       rows,
@@ -14,9 +12,9 @@ class Unendlich {
       debug = false
     } = args
 
-    assert(inner, '.inner required')
-    assert(outer, '.outer required')
-    assert(render, '.render required')
+    if (!inner) throw new Error('.inner required')
+    if (!outer) throw new Error('.outer required')
+    if (!render) throw new Error('.render required')
 
     this.inner = inner
     this.outer = outer
@@ -198,4 +196,4 @@ class Unendlich {
   }
 }
 
-module.exports = Unendlich
+module.exports = Infinitely

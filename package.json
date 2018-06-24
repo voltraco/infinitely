@@ -1,8 +1,8 @@
 {
-  "name": "unendlich",
+  "name": "infinitely",
   "version": "2.3.0",
   "license": "MIT",
-  "repository": "voltraco/unendlich",
+  "repository": "voltraco/infinitely",
   "scripts": {
     "lint": "prettier-standard '*.js' && standard",
     "test": "npm run lint && npm run test:browser",
