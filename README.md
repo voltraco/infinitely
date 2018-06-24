@@ -5,7 +5,7 @@ Infinite scrolling component that works with _any_ DOM structure and loads conte
 # BUILD STATUS
 
 [![Development sponsored by voltra.co](https://img.shields.io/badge/Development%20sponsored%20by-Voltra.co-yellow.svg)](https://voltra.co/)
-[![build status](https://secure.travis-ci.org/juliangruber/unendlich.svg)](http://travis-ci.org/juliangruber/unendlich)
+[![build status](https://secure.travis-ci.org/juliangruber/infinitely.svg)](http://travis-ci.org/juliangruber/infinitely)
 
 # USAGE
 
@@ -18,7 +18,7 @@ There needs to be an outer and an inner element, the outer element having
 The rest is up to you:
 
 ```js
-const Infinitely = require('unendlich')
+const Infinitely = require('infinitely')
 
 const rows = []
 for (let i = 0; i < 1e5; i++) {
@@ -54,7 +54,7 @@ const rows = [
 ## Installation
 
 ```bash
-$ npm install unendlich
+$ npm install infinitely
 ```
 
 
@@ -100,4 +100,4 @@ Update the row content. Doesn't trigger a rerender by itself.
 
 #### Infinitely#setHeight(height, { render = true })
 
-Update the #outer element's height. Example: `unendlich.setHeight('200px')`.
+Update the #outer element's height. Example: `infinitely.setHeight('200px')`.
