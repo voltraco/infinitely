@@ -1,11 +1,13 @@
-# unendlich
+# SYNOPSIS
+Infinite scrolling component that works with _any_ DOM structure and loads content lazily.
+
+
+# BUILD STATUS
 
 [![Development sponsored by voltra.co](https://img.shields.io/badge/Development%20sponsored%20by-Voltra.co-yellow.svg)](https://voltra.co/)
 [![build status](https://secure.travis-ci.org/juliangruber/unendlich.svg)](http://travis-ci.org/juliangruber/unendlich)
 
-Infinite scrolling component that works with _any_ DOM structure and loads content lazily.
-
-## Usage
+# USAGE
 
 There needs to be an outer and an inner element, the outer element having
 
@@ -41,8 +43,6 @@ const example = new Unendlich({
 })
 ```
 
-## Async support
-
 A row element can also by an `async` function, which will then be resolved before rendering:
 
 ```js
@@ -57,9 +57,24 @@ const rows = [
 $ npm install unendlich
 ```
 
-## API
 
-### new Unendlich({ rows, inner, outer, render, update, page = 100, padding = 50, rowHeight, debug = false })
+# API
+
+## CONSTRUCTOR
+
+```js
+new Unendlich({
+  rows,
+  inner,
+  outer,
+  render,
+  update,
+  page = 100,
+  padding = 50,
+  rowHeight,
+  debug = false
+})
+```
 
 Create a new instance and `.render()` it.
 
@@ -73,18 +88,16 @@ creating new ones. For example:
 }
 ```
 
-### Unendlich#render({ refresh })
+## METHODS
+
+#### Unendlich#render({ refresh })
 
 Force a render, if `reset` is `true` it will also rerender already rendered rows.
 
-### Unendlich#setRows(rows)
+#### Unendlich#setRows(rows)
 
 Update the row content. Doesn't trigger a rerender by itself.
 
-### Unendlich#setHeight(height, { render = true })
+#### Unendlich#setHeight(height, { render = true })
 
 Update the #outer element's height. Example: `unendlich.setHeight('200px')`.
-
-## License
-
-MIT
